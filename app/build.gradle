@@ -86,3 +86,13 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+bootRun {
+    // we use this to be able to pass systemProperties from the gradlew command to the application
+    // however, it now sets user.dir to the root project dir (instead of the bootRun sub-project)
+    // and that messes up TARGET_DIR resolution (which is relative to null b/c of the static init - so it uses user.dir?)
+    systemProperties System.properties
+    // however, we now set it back ...
+    // uncomment the following line and the BootStrap assertion will pass again
+    // systemProperty "user.dir", workingDir.path
+}
